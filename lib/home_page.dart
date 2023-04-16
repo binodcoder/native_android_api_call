@@ -10,6 +10,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //Method channel send message to android and android send response to flutter
+
   static const batteryChannel = MethodChannel('com.example.native_android_api_call');
   String batteryLevel = 'Waiting ...';
 
