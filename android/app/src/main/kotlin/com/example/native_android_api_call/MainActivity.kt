@@ -24,14 +24,15 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler{call, result->
             if(call.method=="getBatteryLevel"){
                 val arguments= call.arguments() as Map<String, String>?
-                val name= arguments?.get("name")
-                val batteryLevel=getBatteryLevel()
+                val name= arguments!!["name"]
+                val batteryLevel=print(name )
+                //getBatteryLevel()
                 result.success(batteryLevel)
             }
         }
     }
 
-    private fun getBatteryLevel(): Int{
+    private fun getBatteryLevel( ): Int{
         val batteryLevel:Int
         if (VERSION.SDK_INT>=VERSION_CODES.LOLLIPOP){
             val batteryManager=getSystemService(Context.BATTERY_SERVICE) as BatteryManager
@@ -41,5 +42,18 @@ class MainActivity: FlutterActivity() {
             batteryLevel=intent!!.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)*100
         }
         return batteryLevel
+    }
+
+        private fun print(name :String) :Int{
+        val appInstalled = true
+        if (appInstalled) {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.setPackage("mate.bluetoothprint")
+            sendIntent.putExtra(Intent.EXTRA_TEXT, name)
+            sendIntent.type = "text/plain"
+            startActivity(sendIntent)
+        }
+        return 1;
     }
 }
